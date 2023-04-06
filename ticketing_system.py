@@ -12,11 +12,11 @@ class Ticket:
     tickets_closed = 0
     tickets_open = 0
 
-    def __init__(self, s_id, name, se, sd, re, oc):
+    def __init__(self, s_id, name, email, disc, re, oc):
         self.s_id = s_id  # Staff ID
         self.name = name  # Staff Name
-        self.se = se  # Staff Email
-        self.sd = sd  # Description of issue
+        self.email = email  # Staff Email
+        self.disc = disc  # Description of issue
         self.re = re  # Response
         self.oc = oc  # Status (Open/Closed)
         Ticket.stored_tickets.append(self)
@@ -38,16 +38,16 @@ class Ticket:
         self.name = name
 
     def get_email(self):
-        return self.se
+        return self.email
 
-    def set_email(self, se):
-        self.se = se
+    def set_email(self, email):
+        self.email = email
 
     def get_disc(self):
-        return self.sd
+        return self.disc
 
-    def set_disc(self, sd):
-        self.sd = sd
+    def set_disc(self, disc):
+        self.disc = disc
 
     def get_response(self):
         return self.re
@@ -80,12 +80,12 @@ class Ticket:
         return ticket_stats
 
     def change_pass(self):
-        if "password change" in self.sd.lower() or "change password" in self.sd.lower():
+        if "password change" in self.disc.lower() or "change password" in self.disc.lower():
             new_pass = self.s_id[:2] + self.name[:3]
             self.set_response("New Password generated:" + new_pass)
 
 
-t1 = Ticket("Staff ID", "Name", "Email address", "Description", "Not yet provided", "Open")
+# t1 = Ticket("Staff ID", "Name", "Email address", "Description", "Not yet provided", "Open")
 
 
 # if user asks to submit ticket, show input console
@@ -108,12 +108,12 @@ class Main:
                 print("Please enter the following -")
                 s_id = input("Staff ID:")
                 name = input("Name:")
-                se = input("Email:")
-                sd = input("Description:")
-                t = Ticket(s_id, name, se, sd, "Not yet provided", "Open")
+                email = input("Email:")
+                disc = input("Description:")
+                t1 = Ticket(s_id, name, email, disc, "Not yet provided", "Open")
                 print("Ticket number:", t1.ticket_number)
 
-            elif action == 2:  # View ticket
+            elif action == 2:  # View tickets
                 while True:
                     ticket_number = int(input("Enter ticket number:"))
 
