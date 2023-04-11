@@ -1,7 +1,6 @@
 # ticketing_system.py
 
 # first iteration includes class Ticket
-# implemented encapsulation
 # second iteration includes user console
 
 
@@ -12,13 +11,13 @@ class Ticket:
     tickets_closed = 0
     tickets_open = 0
 
-    def __init__(self, s_id, name, email, disc, re, oc):
+    def __init__(self, s_id, name, email, disc, response, status):
         self.s_id = s_id  # Staff ID
         self.name = name  # Staff Name
         self.email = email  # Staff Email
         self.disc = disc  # Description of issue
-        self.re = re  # Response
-        self.oc = oc  # Status (Open/Closed)
+        self.response = response  # Response
+        self.status = status  # Status (Open/Closed)
         Ticket.stored_tickets.append(self)
         Ticket.ticket_number += 1
         Ticket.tickets_created += 1
@@ -50,16 +49,16 @@ class Ticket:
         self.disc = disc
 
     def get_response(self):
-        return self.re
+        return self.response
 
-    def set_response(self, re):
-        self.re = re
+    def set_response(self, response):
+        self.response = response
 
     def get_status(self):
-        return self.oc
+        return self.status
 
-    def set_status(self, oc):
-        self.oc = oc
+    def set_status(self, status):
+        self.status = status
 
     def get_ticket(self, ticket_number):
         for ticket in Ticket.stored_tickets:
