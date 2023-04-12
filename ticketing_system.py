@@ -60,6 +60,11 @@ class Ticket:
     def set_status(self, status):
         self.status = status
 
+    def set_closed(self, set_status):
+        set_status("Closed")
+        Ticket.tickets_open -= 1
+        Ticket.tickets_closed += 1
+
     def get_ticket(self, ticket_number):
         for ticket in Ticket.stored_tickets:
             if ticket.ticket_number == ticket_number:
@@ -94,6 +99,7 @@ class Main:
 
     def __init__(self):
         action = 0
+        open_option = 0
 
         while action != 4:
             print("\n"
@@ -113,22 +119,33 @@ class Main:
                 print("Ticket number:", t1.ticket_number)
 
             elif action == 2:  # View tickets
+                print("All stored tickets:\n")
+                for ticket in Ticket.stored_tickets:
+                    print(f"Ticket number: {ticket.ticket_number}, Creator: {ticket.get_name()}\n")
+
                 while True:
                     ticket_number = int(input("Enter ticket number:"))
 
-                    print("Printing Tickets:", (t1.get_ticket(ticket_number)))
+                    print("Printing Ticket:", (t1.get_ticket(ticket_number)))
 
-                    sub_action = input("Would you like to respond to, or reopen a ticket? Y/N:")
+                    while open_option != 3:
+                        open_option = input("1. Respond to ticket\n"
+                                            "2. Reopen ticket\n"
+                                            "3. Back")
 
-                    if sub_action.upper() == "Y":
-                        print("Ticket reopened.")
+                        if open_option == 1:
+                            ticket.set_response(input("Enter your response: "))
+                            ticket.set_status("Closed")
 
-                    elif sub_action.upper() == "N":
-                        print("Ticket status unchanged")
-                        break
+                        elif open_option == 2:
+                            print("Ticket reopened.")
+                            ticket.set_status("Open")
+
+                        elif open_option == 3:
+                            break
 
                     else:
-                        print("Please select again.")
+                        print("Invalid input.")
 
             elif action == 3:  # Show ticket status
                 print("Displaying Ticket Stats:",
