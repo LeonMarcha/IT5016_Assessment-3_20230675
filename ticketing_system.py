@@ -60,15 +60,10 @@ class Ticket:
     def set_status(self, status):
         self.status = status
 
-    def set_closed(self, set_status):
-        set_status("Closed")
-        Ticket.tickets_open -= 1
-        Ticket.tickets_closed += 1
-
     def get_ticket(self, ticket_number):
         for ticket in Ticket.stored_tickets:
             if ticket.ticket_number == ticket_number:
-                return f"\n\nTicket Number:{str(Ticket.ticket_number)}\n" \
+                return f"\n\nTicket Number:{str(ticket_number)}\n" \
                        f"Ticket Creator:{self.get_name()}\n" \
                        f"Staff ID:{self.get_id()}\n" \
                        f"Email Address:{self.get_email()}\n" \
@@ -89,9 +84,6 @@ class Ticket:
             self.set_response("New Password generated:" + new_pass)
 
 
-# t1 = Ticket("Staff ID", "Name", "Email address", "Description", "Not yet provided", "Open")
-
-
 # if user asks to submit ticket, show input console
 # store data given in console
 # user asks to see submitted ticket, show ticket
@@ -99,7 +91,6 @@ class Main:
 
     def __init__(self):
         action = 0
-        open_option = 0
 
         while action != 4:
             print("\n"
@@ -115,37 +106,56 @@ class Main:
                 name = input("Name:")
                 email = input("Email:")
                 disc = input("Description:")
-                t1 = Ticket(s_id, name, email, disc, "Not yet provided", "Open")
-                print("Ticket number:", t1.ticket_number)
+                Ticket(s_id, name, email, disc, "Not yet provided", "Open")
+                print("Ticket number:", Ticket.ticket_number)
 
             elif action == 2:  # View tickets
-                print("All stored tickets:\n")
-                for ticket in Ticket.stored_tickets:
-                    print(f"Ticket number: {ticket.ticket_number}, Creator: {ticket.get_name()}\n")
+                if len(Ticket.stored_tickets) == 0:
+                    print("\nNo tickets.")
+                else:
+                    print("All stored tickets:\n")
+                    for ticket in Ticket.stored_tickets:
+                        print(f"Ticket number: {ticket.ticket_number}, Creator: {ticket.get_name()}")
 
-                while True:
-                    ticket_number = int(input("Enter ticket number:"))
+                    ticket_number = int(input("\nEnter ticket number:"))
+                    ticket = None
+                    for t in Ticket.stored_tickets:
+                        if t.ticket_number == ticket_number:
+                            ticket = t
+                            break
 
-                    print("Printing Ticket:", (t1.get_ticket(ticket_number)))
+                    if ticket is None:
+                        print("Invalid ticket number.")
+                        continue
 
+                    open_option = 0
+                    print("Printing Ticket:", ticket.get_ticket(ticket_number))
                     while open_option != 3:
-                        open_option = input("1. Respond to ticket\n"
-                                            "2. Reopen ticket\n"
-                                            "3. Back")
+                        open_option = int(input("1. Respond to ticket\n"
+                                                "2. Reopen ticket\n"
+                                                "3. Back\n\n"
+                                                "Enter number (1-3):"))
 
                         if open_option == 1:
                             ticket.set_response(input("Enter your response: "))
                             ticket.set_status("Closed")
+                            Ticket.tickets_closed += 1
+                            Ticket.tickets_open -= 1
 
                         elif open_option == 2:
-                            print("Ticket reopened.")
-                            ticket.set_status("Open")
+                            if ticket.get_status() == "Closed":
+                                print("Ticket reopened.")
+                                ticket.set_status("Open")
+                                Ticket.tickets_closed -= 1
+                                Ticket.tickets_open += 1
+                            else:
+                                print("Ticket is already open.")
 
                         elif open_option == 3:
                             break
 
-                    else:
-                        print("Invalid input.")
+                        else:
+                            print("Invalid input.")
 
             elif action == 3:  # Show ticket status
                 print("Displaying Ticket Stats:",
