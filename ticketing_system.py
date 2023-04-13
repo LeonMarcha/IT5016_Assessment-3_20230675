@@ -115,19 +115,11 @@ class Main:
                 else:
                     print("All stored tickets:\n")
                     for ticket in Ticket.stored_tickets:
-                        print(f"Ticket number: {ticket.ticket_number}, Creator: {ticket.get_name()}")
+                        print(f"Ticket number: {ticket.ticket_number}, "
+                              f"Creator: {ticket.get_name()}, "
+                              f"Status: {ticket.get_status()}")
 
                     ticket_number = int(input("\nEnter ticket number:"))
-                    ticket = None
-                    for t in Ticket.stored_tickets:
-                        if t.ticket_number == ticket_number:
-                            ticket = t
-                            break
-
-                    if ticket is None:
-                        print("Invalid ticket number.")
-                        continue
-
                     open_option = 0
                     print("Printing Ticket:", ticket.get_ticket(ticket_number))
                     while open_option != 3:
@@ -137,7 +129,7 @@ class Main:
                                                 "Enter number (1-3):"))
 
                         if open_option == 1:
-                            ticket.set_response(input("Enter your response: "))
+                            ticket.set_response(input("Enter your response:"))
                             ticket.set_status("Closed")
                             Ticket.tickets_closed += 1
                             Ticket.tickets_open -= 1
@@ -149,7 +141,7 @@ class Main:
                                 Ticket.tickets_closed -= 1
                                 Ticket.tickets_open += 1
                             else:
-                                print("Ticket is already open.")
+                                print("\nTicket is already open.\n")
 
                         elif open_option == 3:
                             break
