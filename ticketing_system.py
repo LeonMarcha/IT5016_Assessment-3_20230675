@@ -70,19 +70,19 @@ class Ticket:
     def get_ticket(self, ticket_number):
         for ticket in Ticket.stored_tickets:
             if ticket.ticket_number == ticket_number:
-                return f"\n\nTicket Number: {str(ticket_number)}\n" \
+                return f"\n\nTicket Number: {ticket_number}\n" \
                        f"Ticket Creator: {self.get_name().capitalize()}\n" \
                        f"Staff ID: {self.get_id()}\n" \
                        f"Email Address: {self.get_email()}\n" \
                        f"Description: {self.get_disc()}\n" \
                        f"Response: {self.get_response()}\n" \
                        f"Ticket Status: {self.get_status()}\n"
-        return "No tickets matching input"
+        return "No tickets matching input."
 
     def get_stats():
         ticket_stats = f"\n\nTickets Created:{Ticket.tickets_created}\n"
         ticket_stats += f"Tickets Resolved:{Ticket.tickets_closed}\n"
-        ticket_stats += f"Tickets To Solve:{Ticket.tickets_open}\n"
+        ticket_stats += f"Tickets To Solve:{Ticket.tickets_open}"
         return ticket_stats
 
     def change_pass(self):
@@ -100,23 +100,28 @@ class Main:
         action = 0
         menu = "\n"\
                "1. Submit a ticket\n"\
-               "2. View ticket\n"\
+               "2. View tickets\n"\
                "3. Show ticket stats\n"\
-               "4. Exit program\n"
-        print(menu)
+               "4. Exit program"
 
         while action != 4:
             try:
-                action = int(input("Enter number (1-4): "))
+                print(menu)
+                action = int(input("\nEnter number (1-4): "))
                 if action == 1:  # Submit a ticket
-                    print("\nCreating a ticket,\n"
-                          "Please enter the following -")
+                    print("\nCreating a ticket,\nPlease enter the following -")
                     s_id = input("Staff ID: ")
                     name = input("Name: ")
-                    email = input("Email: ")
+                    while True:
+                        email = input("Email: ")
+                        if '@' in email:
+                            break
+                        else:
+                            print("Please enter a valid email address.")
                     disc = input("Description: ")
                     Ticket(s_id, name, email, disc, "Not yet provided", "Open")
-                    print("Assigned ticket number: ", Ticket.ticket_number), "\n"
+                    print("Ticket created,\n"
+                          "Assigned ticket number: ", Ticket.ticket_number)
 
                 elif action == 2:  # View tickets
                     if len(Ticket.stored_tickets) == 0:
@@ -128,9 +133,12 @@ class Main:
                                   f"Creator: {ticket.get_name().capitalize()}, "
                                   f"Status: {ticket.get_status()}")
 
-                        ticket_number = int(input("\nEnter ticket number:"))
+                        ticket_number = int(input("\nEnter ticket number or '0' to go back:"))
+                        if ticket_number == 0:
+                            continue
+                        else:
+                            print("\nPrinting Ticket:", ticket.get_ticket(ticket_number))
                         open_option = 0
-                        print("\nPrinting Ticket:", ticket.get_ticket(ticket_number))
                         while open_option != 3:
                             try:
                                 open_option = int(input("1. Respond to ticket\n"
