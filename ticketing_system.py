@@ -6,6 +6,7 @@
 
 class Ticket:
     stored_tickets = []
+    ticket_numbers = []
     ticket_number = 2000  # counter static field begins at 2000
     tickets_created = 0
     tickets_closed = 0
@@ -18,11 +19,17 @@ class Ticket:
         self.disc = disc  # Description of issue
         self.response = response  # Response
         self.status = status  # Status (Open/Closed)
-        Ticket.stored_tickets.append(self)
+        self.ticket_number = self.generate_ticket_number()
+        Ticket.stored_tickets.append(self)  # Stores each new ticket in array
         Ticket.ticket_number += 1
         Ticket.tickets_created += 1
         Ticket.tickets_open += 1
         self.change_pass()
+
+    def generate_ticket_number(self):
+        ticket_number = len(Ticket.ticket_numbers) + 2001
+        Ticket.ticket_numbers.append(ticket_number)
+        return ticket_number
 
     def get_id(self):
         return self.s_id
@@ -63,7 +70,7 @@ class Ticket:
     def get_ticket(self, ticket_number):
         for ticket in Ticket.stored_tickets:
             if ticket.ticket_number == ticket_number:
-                return f"\n\nTicket Number:{str(ticket_number)}\n" \
+                return f"\n\nTicket Number:{str(self.ticket_number)}\n" \
                        f"Ticket Creator:{self.get_name()}\n" \
                        f"Staff ID:{self.get_id()}\n" \
                        f"Email Address:{self.get_email()}\n" \
@@ -121,7 +128,7 @@ class Main:
 
                     ticket_number = int(input("\nEnter ticket number:"))
                     open_option = 0
-                    print("Printing Ticket:", ticket.get_ticket(ticket_number))
+                    print("\nPrinting Ticket:", ticket.get_ticket(ticket_number))
                     while open_option != 3:
                         open_option = int(input("1. Respond to ticket\n"
                                                 "2. Reopen ticket\n"
