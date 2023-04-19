@@ -22,14 +22,12 @@ class Student:
     def set_gen(self, sg):
         self.sg = sg
 
-    def get_All(self):
-        All = self.sn, self.sa, self.sg
-        return " ".join(All)
+    def get_all(self):
+        all_details = self.sn, self.sa, self.sg
+        return " ".join(all_details)
 
 class Main(Student):
-
-
-#  make class that includes response and status
+     #  make class that includes response and status
 
 Name = "Geoff"
 Age = "29"
@@ -43,7 +41,7 @@ print(student2.get_name(),
       student2.get_gen()
       )
 
-print(student1.get_All())
+print(student1.get_all())
 
 print(student1.get_gen())
 print(student1.sn)
