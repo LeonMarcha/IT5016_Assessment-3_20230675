@@ -1,3 +1,7 @@
+# this was a loop written by chatgpt
+# the intention was to better understand the possibilities for my ticking system console
+# I thought I might be able to do it with a for loop, however, this particular loop uses while.
+
 while True:
     print("Select an option:")
     print("1. Option 1")
