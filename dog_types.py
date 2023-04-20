@@ -1,3 +1,5 @@
+# code from lecturer showing inheritance
+
 class Dog:
     species = "Canis familiaris"
 
