@@ -1,3 +1,5 @@
+# this program was made to understand running code with a class
+
 class Student:
     def __init__(self, sn, sa, sg):
         self.sn = sn
@@ -26,8 +28,9 @@ class Student:
         all_details = self.sn, self.sa, self.sg
         return " ".join(all_details)
 
-class Main(Student):
-     #  make class that includes response and status
+
+# class Main(Student):
+#  make class that includes response and status
 
 Name = "Geoff"
 Age = "29"
