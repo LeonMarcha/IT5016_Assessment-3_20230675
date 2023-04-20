@@ -1,3 +1,7 @@
+# exploring object-oriented python
+# I didn't end up adding anything to this code, but found it useful anyway in seeing some written with best practice
+# also learnt how to get code from git, as that was where this code came from
+
 import turtle
 
 
