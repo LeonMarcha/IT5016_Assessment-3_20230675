@@ -1,3 +1,5 @@
+# figuring out how to assign numbers to individual tickets in a list
+
 class Ticket:
     ticket_numbers = []
 
