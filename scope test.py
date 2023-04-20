@@ -1,6 +1,6 @@
 a = 10
 b = 20
-
+c = 0
 
 def _sum():
     c = a + b
@@ -10,4 +10,4 @@ def _sum():
 print(c)
 print(_sum())
 
-# error because c is undefined outside of instance
+# error still because c inside function is separate from c outside
