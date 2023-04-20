@@ -2,6 +2,7 @@
 #
 # @ author: A. N. Other
 # date: September 2016
+# program converts text into morse
 
 morse = {
     "A": ".-",
