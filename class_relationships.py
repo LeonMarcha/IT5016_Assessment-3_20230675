@@ -1,3 +1,5 @@
+# practice for understanding inheritance in classes
+
 class Person:
     def __init__(self, name, phone, email, address):
         self.name = name
