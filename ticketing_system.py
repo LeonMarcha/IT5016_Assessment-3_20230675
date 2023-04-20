@@ -114,7 +114,7 @@ class Main:
                     name = input("Name: ")
                     while True:
                         email = input("Email: ")
-                        if '@' in email:
+                        if '@' and "." in email:
                             break
                         else:
                             print("Please enter a valid email address.")
